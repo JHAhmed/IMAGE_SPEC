@@ -31,6 +31,9 @@ create_source()
 if 'in_progress' not in st.session_state:
     st.session_state.in_progress = False
 
+if 'complete' not in st.session_state:
+    st.session_state.complete = False
+
 if (not st.session_state.in_progress) :
     rmtree(SOURCE_DIR)
     os.makedirs(SOURCE_DIR)
@@ -124,6 +127,7 @@ def init_excel (file_name) :
     end = time.time()
     # delete_existing()
     st.session_state.in_progress = False
+    st.session_state.complete = True
     st.success(f'Finished in {str(round((end - begin), 2))} seconds!', icon="✅")
 
 
@@ -151,3 +155,11 @@ name = st.text_input('Enter XLSX File Name', )
 
 
 st.button('Extract', on_click=init_excel, args=(name,))
+
+if (st.session_state.complete) :
+    with open(name + ".xlsx", "rb") as file:
+        btn = st.download_button(
+                label=f"Download {name + ".xlsx"}",
+                data=file,
+                file_name=name + ".xlsx",
+              )
