@@ -159,7 +159,7 @@ st.button('Extract', on_click=init_excel, args=(name,))
 if (st.session_state.complete) :
     with open(name + ".xlsx", "rb") as file:
         btn = st.download_button(
-                label=f"Download {name + ".xlsx"}",
+                label=f"Download {name} + .xlsx",
                 data=file,
                 file_name=name + ".xlsx",
               )
